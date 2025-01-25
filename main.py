@@ -1,8 +1,12 @@
 def main():
     file_contents = read_book_text("/home/thetodd/workspace/github.com/EHPF-TheTodd/bookbot/books/frankenstein.txt")
-    print(file_contents)
-    print(f"Word Count: {count_words(file_contents)}")
-    print(f"Character Count:\n{count_characters(file_contents)}")
+    print("--- Begin report of books/frankenstein.txt ---")
+    print(f"Word Count: {count_words(file_contents)}\n")
+    char_count = count_characters(file_contents)
+    sorted_characters = sorting(char_count)
+    for i in sorted_characters:
+        print(f"The '{i["character"]}' character was found {i["num"]} times")
+    print("--- End report ---")
 
 def read_book_text(path):
     with open(path) as f:
@@ -20,5 +24,13 @@ def count_characters(read_contents):
         else:
             char_count[character] = 1
     return char_count
+
+def sorting(dictionary):
+    dict_list = []
+    for i in dictionary:
+        if i.isalpha() == True:
+            dict_list.append({"character": i, "num": dictionary[i]})
+    sorted_list = sorted(dict_list, key=lambda d: d["character"])
+    return sorted_list
 
 main()
